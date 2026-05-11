@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YvanAI Wiki · 公开学习资料库</title>
+<meta name="description" content="YvanAI Wiki - 党史学习、AI技术、周易研究的公开学习资料库">
+<style>
+:root {
+  --primary: #c41e3a;
+  --primary-dark: #8b0000;
+  --gold: #d4a843;
+  --gold-light: #f0d68a;
+  --bg-dark: #0a0a1a;
+  --bg-card: #12122a;
+  --bg-card-hover: #1a1a3a;
+  --bg-glass: rgba(18, 18, 42, 0.8);
+  --text-primary: #e8e8f0;
+  --text-secondary: #a0a0b8;
+  --text-muted: #6c6c88;
+  --border: #2a2a4a;
+  --accent-blue: #4a9eff;
+  --accent-green: #4ade80;
+  --accent-purple: #a855f7;
+  --accent-orange: #fb923c;
+  --gradient-red: linear-gradient(135deg, #c41e3a 0%, #ff6b6b 100%);
+  --gradient-gold: linear-gradient(135deg, #d4a843 0%, #f0d68a 100%);
+  --gradient-blue: linear-gradient(135deg, #4a9eff 0%, #818cf8 100%);
+  --gradient-purple: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+
+/* Background Animation */
+.bg-animation {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.bg-animation::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 20% 50%, rgba(196, 30, 58, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(74, 158, 255, 0.06) 0%, transparent 50%),
+              radial-gradient(circle at 50% 80%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+  animation: bgFloat 20s ease-in-out infinite;
+}
+
+@keyframes bgFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(2%, -2%) rotate(1deg); }
+  66% { transform: translate(-1%, 1%) rotate(-1deg); }
+}
+
+/* Navigation */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(10, 10, 26, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(42, 42, 74, 0.5);
+  padding: 0 20px;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.nav-logo-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--gradient-red);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.nav-logo-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.nav-logo-text span {
+  color: var(--gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-links a {
+  padding: 8px 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+  background: rgba(196, 30, 58, 0.1);
+}
+
+.nav-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(42, 42, 74, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  width: 200px;
+  transition: all 0.3s;
+}
+
+.nav-search:focus-within {
+  border-color: var(--primary);
+  width: 260px;
+}
+
+.nav-search input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  width: 100%;
+}
+
+.nav-search input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Hero */
+.hero {
+  padding: 140px 20px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(196, 30, 58, 0.1);
+  border: 1px solid rgba(196, 30, 58, 0.2);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: var(--gold);
+  margin-bottom: 30px;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--accent-green);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero h1 {
+  font-size: 3.2em;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero h1 .gradient {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  font-size: 1.2em;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-number {
+  font-size: 2em;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.hero-stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Knowledge Map */
+.section {
+  padding: 80px 20px;
+}
+
+.section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 2em;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.section-desc {
+  color: var(--text-secondary);
+  font-size: 1.05em;
+}
+
+/* Subject Cards */
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.subject-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 30px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.subject-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--card-accent, var(--primary));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.subject-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-accent, var(--primary));
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.subject-card:hover::before {
+  opacity: 1;
+}
+
+.subject-card.red { --card-accent: var(--primary); }
+.subject-card.blue { --card-accent: var(--accent-blue); }
+.subject-card.purple { --card-accent: var(--accent-purple); }
+.subject-card.gold { --card-accent: var(--gold); }
+
+.subject-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  background: rgba(196, 30, 58, 0.1);
+}
+
+.subject-card.red .subject-icon { background: rgba(196, 30, 58, 0.1); }
+.subject-card.blue .subject-icon { background: rgba(74, 158, 255, 0.1); }
+.subject-card.purple .subject-icon { background: rgba(168, 85, 247, 0.1); }
+.subject-card.gold .subject-icon { background: rgba(212, 168, 67, 0.1); }
+
+.subject-card h3 {
+  font-size: 1.3em;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.subject-card p {
+  color: var(--text-secondary);
+  font-size: 0.95em;
+  margin-bottom: 16px;
+}
+
+.subject-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.topic-tag {
+  padding: 4px 10px;
+  background: rgba(42, 42, 74, 0.5);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.subject-card:hover .topic-tag {
+  background: rgba(196, 30, 58, 0.1);
+  color: var(--text-secondary);
+}
+
+/* Recent Updates */
+.recent-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recent-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s;
+}
+
+.recent-item:hover {
+  border-color: var(--primary);
+  transform: translateX(4px);
+}
+
+.recent-date {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  width: 80px;
+}
+
+.recent-category {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.recent-category.party { background: rgba(196, 30, 58, 0.15); color: var(--primary); }
+.recent-category.ai { background: rgba(74, 158, 255, 0.15); color: var(--accent-blue); }
+.recent-category.zhouyi { background: rgba(212, 168, 67, 0.15); color: var(--gold); }
+
+.recent-title {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.footer p {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-search { width: 140px; }
+  .hero h1 { font-size: 2.2em; }
+  .hero-stats { gap: 20px; }
+  .hero-stat-number { font-size: 1.5em; }
+  .subject-grid { grid-template-columns: 1fr; }
+  .recent-date { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-animation"></div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">Y</div>
+      <div class="nav-logo-text">YvanAI <span>Wiki</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="#subjects">学科</a>
+      <a href="#recent">更新</a>
+      <a href="#about">关于</a>
+    </div>
+    <div class="nav-search">
+      <span>🔍</span>
+      <input type="text" placeholder="搜索学习资料..." id="searchInput">
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🟢 持续更新中</div>
+    <h1>欢迎来到<br><span class="gradient">YvanAI Wiki</span></h1>
+    <p class="hero-desc">
+      一个持续进化的公开学习资料库。涵盖党史研究、AI技术、周易哲学等领域，
+      由 AI 助手 Hermes 协助整理，随时可在外网访问阅读。
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-number" id="articleCount">3</div>
+        <div class="hero-stat-label">篇文章</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-number" id="subjectCount">3</div>
+        <div class="hero-stat-label">个学科</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-number">∞</div>
+        <div class="hero-stat-label">持续更新</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Knowledge Map -->
+<section class="section" id="subjects">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">📚 知识地图</h2>
+      <p class="section-desc">选择一个学科开始学习</p>
+    </div>
+    <div class="subject-grid">
+      <!-- 党史学习 -->
+      <a href="/party-history/" class="subject-card red">
+        <div class="subject-icon">🏛️</div>
+        <h3>党史学习</h3>
+        <p>系统学习中国共产党从创立到发展壮大的历史进程，深入理解党的理论与实践。</p>
+        <div class="subject-topics">
+          <span class="topic-tag">党的创立</span>
+          <span class="topic-tag">大革命</span>
+          <span class="topic-tag">土地革命</span>
+          <span class="topic-tag">抗日战争</span>
+          <span class="topic-tag">解放战争</span>
+          <span class="topic-tag">新中国建设</span>
+        </div>
+      </a>
+      <!-- AI学习 -->
+      <a href="/ai-learning/" class="subject-card blue">
+        <div class="subject-icon">🤖</div>
+        <h3>AI 学习</h3>
+        <p>追踪人工智能前沿技术，学习大语言模型、智能体开发、提示工程等核心技能。</p>
+        <div class="subject-topics">
+          <span class="topic-tag">LLM基础</span>
+          <span class="topic-tag">提示工程</span>
+          <span class="topic-tag">Agent开发</span>
+          <span class="topic-tag">RAG</span>
+          <span class="topic-tag">微调技术</span>
+          <span class="topic-tag">多模态</span>
+        </div>
+      </a>
+      <!-- 周易学习 -->
+      <a href="/zhouyi/" class="subject-card gold">
+        <div class="subject-icon">☯️</div>
+        <h3>周易研究</h3>
+        <p>以现代视角重新解读《周易》，探索六十四卦的哲学内涵与系统思维模型。</p>
+        <div class="subject-topics">
+          <span class="topic-tag">六十四卦</span>
+          <span class="topic-tag">象数研究</span>
+          <span class="topic-tag">哲学思想</span>
+          <span class="topic-tag">系统建模</span>
+          <span class="topic-tag">现代应用</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Recent Updates -->
+<section class="section" id="recent" style="background: rgba(18,18,42,0.3);">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="section-title">🕐 最近更新</h2>
+      <p class="section-desc">最新添加的学习资料</p>
+    </div>
+    <div class="recent-list">
+      <a href="/party-history/ch01/" class="recent-item">
+        <span class="recent-date">2026-05</span>
+        <span class="recent-category party">党史</span>
+        <span class="recent-title">第一章：中国共产党的创立和投身大革命的洪流</span>
+      </a>
+      <a href="/ai-learning/" class="recent-item">
+        <span class="recent-date">即将上线</span>
+        <span class="recent-category ai">AI</span>
+        <span class="recent-title">AI学习板块正在建设中...</span>
+      </a>
+      <a href="/zhouyi/" class="recent-item">
+        <span class="recent-date">即将上线</span>
+        <span class="recent-category zhouyi">周易</span>
+        <span class="recent-title">周易研究板块正在建设中...</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section" id="about">
+  <div class="section-inner" style="text-align: center; max-width: 600px;">
+    <div class="section-header">
+      <h2 class="section-title">💡 关于本站</h2>
+    </div>
+    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+      YvanAI Wiki 是一个由 AI 助手 <strong style="color: var(--gold);">Hermes</strong> 协助构建的公开学习资料库。
+      所有内容均由 Hermes 根据权威资料整理生成，旨在提供一个随时可访问的在线学习平台。
+    </p>
+    <p style="color: var(--text-secondary); margin-bottom: 20px;">
+      本站部署在 <strong>GitHub Pages</strong> 上，通过 <strong>Cloudflare</strong> CDN 加速，
+      确保全球范围内快速访问。所有内容持续更新，欢迎收藏。
+    </p>
+    <p style="color: var(--text-muted); font-size: 14px;">
+      域名：yvanai.net.eu.org | 托管：Cloudflare | 平台：GitHub Pages
+    </p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2026 YvanAI Wiki · Powered by <a href="https://github.com/klzone/yvanai-wiki">GitHub Pages</a></p>
+  <p style="margin-top: 8px;">由 Hermes AI 助手协助构建 · 内容持续更新中</p>
+</footer>
+
+<script>
+// Search functionality
+document.getElementById('searchInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    var q = this.value.trim();
+    if (q) {
+      alert('搜索功能开发中，当前搜索：' + q);
+    }
+  }
+});
+
+// Animate stats on scroll
+var statsObs = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      // Count up animation
+      var el = entry.target;
+      var target = parseInt(el.textContent);
+      if (!isNaN(target)) {
+        var current = 0;
+        var step = Math.ceil(target / 30);
+        var timer = setInterval(function() {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          el.textContent = current;
+        }, 40);
+      }
+      statsObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.hero-stat-number').forEach(function(el) {
+  if (el.textContent !== '∞') statsObs.observe(el);
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
